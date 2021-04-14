@@ -1,0 +1,14 @@
+C:\Users\HlDE1\source\repos\Flohmarkt_In_Langdorf\Flohmarkt_In_Langdorf\bin\Debug\Flohmarkt_In_Langdorf.exe.config
+C:\Users\HlDE1\source\repos\Flohmarkt_In_Langdorf\Flohmarkt_In_Langdorf\bin\Debug\Flohmarkt_In_Langdorf.exe
+C:\Users\HlDE1\source\repos\Flohmarkt_In_Langdorf\Flohmarkt_In_Langdorf\bin\Debug\Flohmarkt_In_Langdorf.pdb
+C:\Users\HlDE1\source\repos\Flohmarkt_In_Langdorf\Flohmarkt_In_Langdorf\obj\Debug\Flohmarkt_In_Langdorf.csprojAssemblyReference.cache
+C:\Users\HlDE1\source\repos\Flohmarkt_In_Langdorf\Flohmarkt_In_Langdorf\obj\Debug\Flohmarkt_In_Langdorf.csproj.CoreCompileInputs.cache
+C:\Users\HlDE1\source\repos\Flohmarkt_In_Langdorf\Flohmarkt_In_Langdorf\obj\Debug\Flohmarkt_In_Langdorf.exe
+C:\Users\HlDE1\source\repos\Flohmarkt_In_Langdorf\Flohmarkt_In_Langdorf\obj\Debug\Flohmarkt_In_Langdorf.pdb
+D:\Coding\BWINF\2. Runde\Aufgabe 1\Source Code\C#\Flohmarkt_In_Langdorf\bin\Debug\Flohmarkt_In_Langdorf.exe.config
+D:\Coding\BWINF\2. Runde\Aufgabe 1\Source Code\C#\Flohmarkt_In_Langdorf\bin\Debug\Flohmarkt_In_Langdorf.exe
+D:\Coding\BWINF\2. Runde\Aufgabe 1\Source Code\C#\Flohmarkt_In_Langdorf\bin\Debug\Flohmarkt_In_Langdorf.pdb
+D:\Coding\BWINF\2. Runde\Aufgabe 1\Source Code\C#\Flohmarkt_In_Langdorf\obj\Debug\Flohmarkt_In_Langdorf.csprojAssemblyReference.cache
+D:\Coding\BWINF\2. Runde\Aufgabe 1\Source Code\C#\Flohmarkt_In_Langdorf\obj\Debug\Flohmarkt_In_Langdorf.csproj.CoreCompileInputs.cache
+D:\Coding\BWINF\2. Runde\Aufgabe 1\Source Code\C#\Flohmarkt_In_Langdorf\obj\Debug\Flohmarkt_In_Langdorf.exe
+D:\Coding\BWINF\2. Runde\Aufgabe 1\Source Code\C#\Flohmarkt_In_Langdorf\obj\Debug\Flohmarkt_In_Langdorf.pdb

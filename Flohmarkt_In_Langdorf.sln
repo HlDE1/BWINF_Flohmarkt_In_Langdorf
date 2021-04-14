@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flohmarkt_In_Langdorf", "Flohmarkt_In_Langdorf\Flohmarkt_In_Langdorf.csproj", "{737CF712-8CE9-4AE7-BC8C-ADE1C05F06DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{737CF712-8CE9-4AE7-BC8C-ADE1C05F06DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{737CF712-8CE9-4AE7-BC8C-ADE1C05F06DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{737CF712-8CE9-4AE7-BC8C-ADE1C05F06DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{737CF712-8CE9-4AE7-BC8C-ADE1C05F06DF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BC820707-E2C9-4F7A-891E-12646474BDA3}
+	EndGlobalSection
+EndGlobal
