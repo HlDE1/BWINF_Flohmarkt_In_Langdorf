@@ -4,26 +4,28 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Flohmarkt_In_Langdorf
 {
     class Program
     {
-        // static List<string> input_txt = File.ReadAllLines(@"D:\Coding\BWINF\2. Runde\Aufgabe 1\Materialien\flohmarkt7.txt").ToList();
-        // static int Voranmeldungen = Convert.ToInt32(input_txt[0]);
-        // static int[] Info_SortedList_Index = new int[Voranmeldungen];
 
         static List<string> input_txt = new List<string>();
         static int Voranmeldungen;
         static List<string> Numbers = new List<string>();
         static List<string> SortedList = new List<string>();
-        static int[] Info_SortedList_Index = new int[Voranmeldungen];
+        static int[] Info_SortedList_Index;
+        static int Personen_removed = 0;
+        static string Content = "";
 
+        static void Protokoll(string Text, bool enable = true)
+        {
+            Console.WriteLine(Text);
+            if (enable == true)
+                Content += Text + "\n";
+        }
 
-
-        //3 Zahlen -> Mietbeginn(volle stunden) | Mietende (volle Stunde) |länge des Standes (in Metern)
-        //Flohmarkt Öffnungszeiten 8-18 | Flohmarkt länge = 1000m
-        //1€ pro Stunde & Meter -> 1h & 1 Meter = 1€
         static void AddNumbers() // Fügt Mietbegin, Mietende und länge des Standes in die Liste Numbers
         {
             for (int i = 1; i < input_txt.Count; i++)
@@ -89,8 +91,8 @@ namespace Flohmarkt_In_Langdorf
                 int Zeit = MathAbs_Cal(Convert.ToInt32(tmp[0]), Convert.ToInt32(tmp[1]));
                 int Kosten = Zeit * Convert.ToInt32(tmp[2]);
 
-                Console.WriteLine($"{i + 1}. Von {tmp[0]} bis {tmp[1]} Uhr | Mietlänge: {tmp[2]}m");
-                Console.WriteLine($"=>Mietzeit: {Zeit}h | Kosten: {Kosten} Euro \n");
+                Protokoll($"{i + 1}. Von {tmp[0]} bis {tmp[1]} Uhr | Mietlänge: {tmp[2]}m");
+                Protokoll($"=>Mietzeit: {Zeit}h | Kosten: {Kosten} Euro \n");
             }
         }
 
@@ -102,7 +104,7 @@ namespace Flohmarkt_In_Langdorf
                 int end_time = Convert.ToInt32(SortedList[i].Split(' ')[1]);
                 if (start_time >= 8 && start_time <= 18 && start_time < end_time)
                 {
-                    //Console.WriteLine($"{i + 1}. {start_time}");
+                    //Protokoll($"{i + 1}. {start_time}");
                 }
                 else
                 {
@@ -117,12 +119,11 @@ namespace Flohmarkt_In_Langdorf
             return Stunden * Meter;
         }
 
-
         static void Remove_MinPreis(int MietlängenCheck, decimal min, List<string> List) // Wenn die Mietlänge > 1000 wird das Element entfernt  
         {
             if (MietlängenCheck > 1000) // Den kleinsten Gesamtpreis entfernen
             {
-                //Console.WriteLine("Den kleinsten Gesamtpreis entfernen\n");
+                //Protokoll("Den kleinsten Gesamtpreis entfernen\n");
                 for (int i = 0; i < List.Count; i++)
                 {
                     int start_time = Convert.ToInt32(List[i].Split(' ')[0]);
@@ -131,94 +132,118 @@ namespace Flohmarkt_In_Langdorf
                     int Preis = GesamtPreis(start_time, end_time, Meter);
                     if (Preis == min) //min ist dafür da um die Person zu bestimmen der am wenigsten bezahlt 
                     {
-                        Console.WriteLine($"{List[i]} wurde entfernt");
+                        Personen_removed++;
+                        Protokoll($"{List[i]} wurde entfernt");
                         List.Remove(List[i]);
                     }
                 }
             }
         }
 
+
         static void Main(string[] args)
         {
-            Console.WriteLine("Bitte geben Sie den Pfad der Datei ein:");
-            string input = Console.ReadLine();
+
             try
             {
-                if (File.Exists(input))
+                bool path_ask = true;
+
+                while (path_ask == true)
                 {
+                    Protokoll("Bitte geben Sie den Pfad der Datei ein:", false);
+                    string input = Console.ReadLine();
 
-                    input_txt = File.ReadAllLines(input).ToList();
-                    Voranmeldungen = Convert.ToInt32(input_txt[0]);
-                    Console.WriteLine(input_txt[1]);
-                    Console.WriteLine(Voranmeldungen);
-
-                    AddNumbers();
-                    SortList_Index_Fix(Info_SortedList_Index);
-                    InfoPrint();
-                    SortList(SortedList);
-                    TimeCheck();
-
-
-                    int sum = 0;
-                    decimal min = Decimal.MaxValue;
-                    List<string> Remove_nums = new List<string>();
-                    for (int a = 0; a < SortedList.Count; a++)
+                    if (File.Exists(input))
                     {
-                        int Mietbegin = Convert.ToInt32(SortedList[a].Split(' ')[0]);
-                        int Mietende = Convert.ToInt32(SortedList[a].Split(' ')[1]);
-                        int MietlängenCheck = 0;
 
-                        for (int Uhr = Mietbegin; Uhr < Mietende; Uhr++)
+                        input_txt = File.ReadAllLines(input).ToList();
+                        Voranmeldungen = Convert.ToInt32(input_txt[0]);
+                        Info_SortedList_Index = new int[Voranmeldungen];
+                        Console.Clear();
+
+                        AddNumbers();
+                        SortList_Index_Fix(Info_SortedList_Index);
+                        InfoPrint();
+                        SortList(SortedList);
+                        TimeCheck();
+
+
+                        int sum = 0;
+                        decimal min = Decimal.MaxValue;
+                        List<string> Remove_nums = new List<string>();
+                        for (int a = 0; a < SortedList.Count; a++)
                         {
-                            for (int i = 0; i < SortedList.Count; i++)
+                            int Mietbegin = Convert.ToInt32(SortedList[a].Split(' ')[0]);
+                            int Mietende = Convert.ToInt32(SortedList[a].Split(' ')[1]);
+                            int MietlängenCheck = 0;
+
+                            for (int Uhr = Mietbegin; Uhr < Mietende; Uhr++)
                             {
-                                int start_time = Convert.ToInt32(SortedList[i].Split(' ')[0]);
-                                int end_time = Convert.ToInt32(SortedList[i].Split(' ')[1]);
-                                int Meter = Convert.ToInt32(SortedList[i].Split(' ')[2]);
-
-                                if (end_time >= Mietbegin && end_time > Mietende || start_time < Mietende)
+                                for (int i = 0; i < SortedList.Count; i++)
                                 {
-                                    int start_time_test = Convert.ToInt32(SortedList[i].Split(' ')[0]);
-                                    int end_time_test = Convert.ToInt32(SortedList[i].Split(' ')[1]);
+                                    int start_time = Convert.ToInt32(SortedList[i].Split(' ')[0]);
+                                    int end_time = Convert.ToInt32(SortedList[i].Split(' ')[1]);
+                                    int Meter = Convert.ToInt32(SortedList[i].Split(' ')[2]);
 
-                                    if (start_time_test <= Uhr && end_time_test > Uhr && Uhr < Mietende)
+                                    if (end_time >= Mietbegin && end_time > Mietende || start_time < Mietende)
                                     {
-                                        int Preis = GesamtPreis(start_time_test, end_time_test, Meter);
-                                        if (Preis < min)// Den Kleinsten Gesamtpreis bestimmen
+                                        int start_time_test = Convert.ToInt32(SortedList[i].Split(' ')[0]);
+                                        int end_time_test = Convert.ToInt32(SortedList[i].Split(' ')[1]);
+
+                                        if (start_time_test <= Uhr && end_time_test > Uhr && Uhr < Mietende)
                                         {
-                                            min = Preis;
+                                            int Preis = GesamtPreis(start_time_test, end_time_test, Meter);
+                                            if (Preis < min)// Den Kleinsten Gesamtpreis bestimmen
+                                            {
+                                                min = Preis;
+                                            }
+                                            sum += Meter;
                                         }
-                                        sum += Meter;
                                     }
                                 }
+                                MietlängenCheck = sum;
+                                Remove_MinPreis(MietlängenCheck, min, SortedList);
+                                min = Decimal.MaxValue;
+                                sum = 0;
                             }
-                            MietlängenCheck = sum;
-                            Remove_MinPreis(MietlängenCheck, min, SortedList);
-                            min = Decimal.MaxValue;
-                            sum = 0;
+                        }
+
+                        Protokoll("");
+                        int tmp_Preis = 0;
+                        for (int i = 0; i < SortedList.Count; i++)
+                        {
+                            int Mietbegin = Convert.ToInt32(SortedList[i].Split(' ')[0]);
+                            int Mietende = Convert.ToInt32(SortedList[i].Split(' ')[1]);
+                            int Meter = Convert.ToInt32(SortedList[i].Split(' ')[2]);
+                            Protokoll($"{i + 1}. {SortedList[i]}");
+                            tmp_Preis += GesamtPreis(Mietbegin, Mietende, Meter);
+                        }
+                        Protokoll("-----------------------------");
+                        Protokoll($"{Voranmeldungen} Personen haben sich angemeldet");
+                        Protokoll($"{Personen_removed} Personen haben keinen Stand bekommen");
+                        Protokoll($"{Voranmeldungen - Personen_removed} Personen haben einen Stand bekommen");
+                        Protokoll($"Der Gesamtpreis der Anwesenden beträgt {tmp_Preis} Euro");
+                        path_ask = false;
+
+                        Protokoll($"\nWollen Sie diese Datei exportieren? Ja oder Nein", false);
+
+                        if (Console.ReadLine().ToLower() == "ja")
+                        {
+                            File.WriteAllText(Directory.GetCurrentDirectory() + "/Test.txt", Content);
+                            //Process.Start(Directory.GetCurrentDirectory() + "/Test.txt", Content);
+                            Console.WriteLine("Der Pfad: " + Directory.GetCurrentDirectory() + $"/{Path.GetFileName(input)}_export.txt", Content);
+                            Console.WriteLine("Datei wurde erfolgreich erstellt");
                         }
                     }
-
-                    Console.WriteLine("");
-                    int tmp_Preis = 0;
-                    for (int i = 0; i < SortedList.Count; i++)
+                    else
                     {
-                        int Mietbegin = Convert.ToInt32(SortedList[i].Split(' ')[0]);
-                        int Mietende = Convert.ToInt32(SortedList[i].Split(' ')[1]);
-                        int Meter = Convert.ToInt32(SortedList[i].Split(' ')[2]);
-                        Console.WriteLine($"{i}. {SortedList[i]}");
-                        tmp_Preis += GesamtPreis(Mietbegin, Mietende, Meter);
+                        Protokoll("Die Datei wurde nicht gefunden");
                     }
-                    Console.WriteLine("-----------------------------");
-                    Console.WriteLine($"Der Gesamtpreis der Anwesenden beträgt {tmp_Preis} Euro");
-                }
-                else
-                {
-                    Console.WriteLine("Error - Die Datei wurde nicht gefunden");
                 }
             }
-            catch
+            catch 
             {
+                Protokoll("Ein unbekannter Fehler ist aufgetreten", false);
 
             }
             Console.ReadKey();
